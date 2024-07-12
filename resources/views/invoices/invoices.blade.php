@@ -72,10 +72,10 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    @can('اضافة فاتورة')
+
                         <a href="invoices/create" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
                                 class="fas fa-plus"></i>&nbsp; اضافة فاتورة</a>
-                    @endcan
+
 
 
 
