@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\InvoicesDetaillsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,9 @@ Route::resource('sections',SectionsController::class);
 Route::resource('products',ProductsController::class);
 Route::get('/add_invoice',[InvoicesController::class,'create']);
 Route::get('/section/{id}',[InvoicesController::class,'getproduit']);
+Route::get('/InvoicesDetails/{id}',[InvoicesDetaillsController::class,'edit']);
+Route::get('View_file/{invoice_number}/{file_name}', [InvoicesDetaillsController::class,'open_file']);
+Route::get('download/{invoice_number}/{file_name}', [InvoicesDetaillsController::class,'download_file']);
+
+Route::post('delete_file', [InvoicesDetaillsController::class,'destroy'])->name('delete_file');;
 Route::get('/{page}',[AdminController::class,'index']);

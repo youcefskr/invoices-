@@ -104,7 +104,38 @@
                                 @php
                                 $i = 0;
                                 @endphp
+                                @foreach ($invoices as $invoice)
+                                    @php
+                                    $i++
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $i }}</td>
+                                        <td>{{ $invoice->invoice_number }} </td>
+                                        <td>{{ $invoice->invoice_Date }}</td>
+                                        <td>{{ $invoice->Due_date }}</td>
+                                        <td>{{ $invoice->product }}</td>
+                                        <td><a
+                                                href="{{ url('InvoicesDetails') }}/{{ $invoice->id }}">{{ $invoice->section->section_name }}</a>
+                                        </td>
+                                        <td>{{ $invoice->Discount }}</td>
+                                        <td>{{ $invoice->Rate_VAT }}</td>
+                                        <td>{{ $invoice->Value_VAT }}</td>
+                                        <td>{{ $invoice->Total }}</td>
+                                        <td>
+                                            @if ($invoice->Value_Status == 1)
+                                                <span class="text-success">{{ $invoice->Status }}</span>
+                                            @elseif($invoice->Value_Status == 2)
+                                                <span class="text-danger">{{ $invoice->Status }}</span>
+                                            @else
+                                                <span class="text-warning">{{ $invoice->Status }}</span>
+                                            @endif
 
+                                        </td>
+
+                                        <td>{{ $invoice->note }}</td>
+
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
