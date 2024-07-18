@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 use App\Models\sections;
 use App\Models\invoices;
 use App\Models\invoices_detaills;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\invoice_attachments;
+use Illuminate\Support\Facades\Notification;
+use App\Events\MyEventClass;
+use App\Notifications\AddInvoice;
 class InvoicesController extends Controller
 {
     /**
@@ -81,11 +85,18 @@ class InvoicesController extends Controller
         }
 
 
-           // $user = User::first();
-           // Notification::send($user, new AddInvoice($invoice_id));
 
-           session()->flash('Add', 'تم اضافة القسم بنجاح ');
-           return back();
+
+
+
+
+        $user = User::first();
+         Notification::send($user, new AddInvoice($invoice_id));
+
+
+
+        session()->flash('Add', 'تم اضافة الفاتورة بنجاح');
+        return back();
 
 
     }
@@ -221,5 +232,10 @@ class InvoicesController extends Controller
         session()->flash('Status_Update');
         return redirect('/invoices');
 
+    }
+    public function Print_invoice($id)
+    {
+        $invoices = invoices::where('id', $id)->first();
+        return view('invoices.Print_invoice',compact('invoices'));
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\InvoicesDetaillsController;
 use App\Http\Controllers\InvoiceAttachmentsController;
+use  App\Http\Controllers\InvoiceAchiveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('invoices',InvoicesController::class);
 Route::resource('sections',SectionsController::class);
+Route::resource('Archive',InvoiceAchiveController::class);
 Route::resource('products',ProductsController::class);
 Route::resource('InvoiceAttachments',InvoiceAttachmentsController::class);
 Route::get('/add_invoice',[InvoicesController::class,'create']);
 Route::get('/section/{id}',[InvoicesController::class,'getproduit']);
+Route::get('/Print_invoice/{id}',[InvoicesController::class,'Print_invoice']);
 Route::get('/Status_show/{id}',[InvoicesController::class,'show'])->name('Status_show');
 Route::post('/Status_Update/{id}',[InvoicesController::class,'Status_Update'])->name('Status_Update');
 Route::get('/InvoicesDetails/{id}',[InvoicesDetaillsController::class,'edit']);
@@ -41,3 +44,5 @@ Route::get('download/{invoice_number}/{file_name}', [InvoicesDetaillsController:
 Route::get('/edit_invoice/{id}',[InvoicesController::class,'edit']);
 Route::post('delete_file', [InvoicesDetaillsController::class,'destroy'])->name('delete_file');;
 Route::get('/{page}',[AdminController::class,'index']);
+
+

@@ -7,9 +7,9 @@
     <!--- Custom-scroll -->
     <link href="{{ URL::asset('assets/plugins/custom-scroll/jquery.mCustomScrollbar.css') }}" rel="stylesheet">
 @endsection
-@section('title')
+<title>
     تفاصيل فاتورة
-@stop
+</title>
 @section('page-header')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">

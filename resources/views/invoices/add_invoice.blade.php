@@ -12,9 +12,9 @@
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
 @endsection
-@section('title')
-    اضافة فاتورة
-@stop
+<title>    اضافة فاتورة</title>
+
+
 
 @section('page-header')
     <!-- breadcrumb -->

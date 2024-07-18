@@ -1,8 +1,8 @@
 @extends('layouts.master2')
 
-@section('title')
+<title>
 تسجيل الدخول - مورا سوفت للادارة القانونية
-@stop
+</title>
 
 
 @section('css')

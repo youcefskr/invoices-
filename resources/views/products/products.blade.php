@@ -16,9 +16,9 @@
     <!--- Select2 css -->
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 @endsection
-@section('title')
+<title>
     المنتجات
-@stop
+</title>
 
 @section('page-header')
     <!-- breadcrumb -->
