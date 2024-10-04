@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\InvoicesDetaillsController;
 use App\Http\Controllers\InvoiceAttachmentsController;
 use  App\Http\Controllers\InvoiceAchiveController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,21 +29,35 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('invoices',InvoicesController::class);
-Route::resource('sections',SectionsController::class);
-Route::resource('Archive',InvoiceAchiveController::class);
-Route::resource('products',ProductsController::class);
-Route::resource('InvoiceAttachments',InvoiceAttachmentsController::class);
-Route::get('/add_invoice',[InvoicesController::class,'create']);
-Route::get('/section/{id}',[InvoicesController::class,'getproduit']);
-Route::get('/Print_invoice/{id}',[InvoicesController::class,'Print_invoice']);
-Route::get('/Status_show/{id}',[InvoicesController::class,'show'])->name('Status_show');
-Route::post('/Status_Update/{id}',[InvoicesController::class,'Status_Update'])->name('Status_Update');
-Route::get('/InvoicesDetails/{id}',[InvoicesDetaillsController::class,'edit']);
-Route::get('View_file/{invoice_number}/{file_name}', [InvoicesDetaillsController::class,'open_file']);
-Route::get('download/{invoice_number}/{file_name}', [InvoicesDetaillsController::class,'download_file']);
-Route::get('/edit_invoice/{id}',[InvoicesController::class,'edit']);
-Route::post('delete_file', [InvoicesDetaillsController::class,'destroy'])->name('delete_file');;
-Route::get('/{page}',[AdminController::class,'index']);
+Route::resource('invoices', InvoicesController::class);
+Route::resource('sections', SectionsController::class);
+Route::resource('Archive', InvoiceAchiveController::class);
+Route::resource('users', UserController::class);
+Route::resource('products', ProductsController::class);
+Route::resource('roles', App\Http\Controllers\RoleController::class);
+Route::resource('InvoiceAttachments', InvoiceAttachmentsController::class);
+Route::get('/add_invoice', [InvoicesController::class, 'create']);
+Route::get('/section/{id}', [InvoicesController::class, 'getproduit']);
+Route::get('/Print_invoice/{id}', [InvoicesController::class, 'Print_invoice']);
+Route::get('/Status_show/{id}', [InvoicesController::class, 'show'])->name('Status_show');
+Route::post('/Status_Update/{id}', [InvoicesController::class, 'Status_Update'])->name('Status_Update');
+Route::get('/InvoicesDetails/{id}', [InvoicesDetaillsController::class, 'edit']);
+Route::get('View_file/{invoice_number}/{file_name}', [InvoicesDetaillsController::class, 'open_file']);
+Route::get('download/{invoice_number}/{file_name}', [InvoicesDetaillsController::class, 'download_file']);
+Route::get('/edit_invoice/{id}', [InvoicesController::class, 'edit']);
+Route::post('delete_file', [InvoicesDetaillsController::class, 'destroy'])->name('delete_file');;
+Route::get('/{page}', [AdminController::class, 'index']);
 
+Route::group(['middleware' => ['role:super-admin|admin']], function () {
 
+    Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+    Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
+
+    Route::resource('roles', App\Http\Controllers\RoleController::class);
+    Route::get('roles/{roleId}/delete', [App\Http\Controllers\RoleController::class, 'destroy']);
+    Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
+    Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
+
+    Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::get('users/{userId}/delete', [App\Http\Controllers\UserController::class, 'destroy']);
+});
