@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('css')
     <!--- Internal Select2 css-->
@@ -12,9 +11,9 @@
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
 @endsection
-<title>    اضافة فاتورة</title>
-
-
+@section('title')
+    اضافة فاتورة
+@stop
 
 @section('page-header')
     <!-- breadcrumb -->
@@ -206,6 +205,12 @@
     <!-- Internal form-elements js -->
     <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
 
+    <script>
+        var date = $('.fc-datepicker').datepicker({
+            dateFormat: 'yy-mm-dd'
+        }).val();
+
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -233,7 +238,9 @@
         });
 
     </script>
-     <script>
+
+
+    <script>
         function myFunction() {
 
             var Amount_Commission = parseFloat(document.getElementById("Amount_Commission").value);
@@ -266,11 +273,6 @@
         }
 
     </script>
- <script>
-    var date = $('.fc-datepicker').datepicker({
-        dateFormat: 'yy-mm-dd'
-    }).val();
 
-</script>
 
 @endsection

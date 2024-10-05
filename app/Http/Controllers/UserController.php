@@ -9,55 +9,52 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /*
     public function __construct()
     {
         $this->middleware('permission:view user', ['only' => ['index']]);
         $this->middleware('permission:create user', ['only' => ['create', 'store']]);
         $this->middleware('permission:update user', ['only' => ['update', 'edit']]);
         $this->middleware('permission:delete user', ['only' => ['destroy']]);
-    }
+    }*/
 
     public function index()
     {
         $users = User::get();
         return view('users.show_users', ['users' => $users]);
     }
-
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return view('role-permission.user.create', ['roles' => $roles]);
-    }
 
+        return view('users.Add_user', compact('roles'));
+    }
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|max:20',
-            'roles' => 'required'
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|same:confirm-password',
+            'roles_name' => 'required'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $input = $request->all();
 
-        $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'User created successfully with roles');
+        $input['password'] = Hash::make($input['password']);
+
+        $user = User::create($input);
+        $user->assignRole($request->input('roles_name'));
+        return redirect()->route('users.index')
+            ->with('success', 'تم اضافة المستخدم بنجاح');
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
+        $user = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
-        $userRoles = $user->roles->pluck('name', 'name')->all();
-        return view('role-permission.user.edit', [
-            'user' => $user,
-            'roles' => $roles,
-            'userRoles' => $userRoles
-        ]);
+        $userRole = $user->roles->pluck('name', 'name')->all();
+        return view('users.edit', compact('user', 'roles', 'userRole'));
     }
 
     public function update(Request $request, User $user)

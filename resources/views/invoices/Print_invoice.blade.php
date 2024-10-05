@@ -9,9 +9,9 @@
 
     </style>
 @endsection
-
-  <title>معاينه طباعة الفاتورة</title>
-
+@section('title')
+    معاينه طباعة الفاتورة
+@stop
 @section('page-header')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">

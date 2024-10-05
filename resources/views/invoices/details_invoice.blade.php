@@ -7,9 +7,9 @@
     <!--- Custom-scroll -->
     <link href="{{ URL::asset('assets/plugins/custom-scroll/jquery.mCustomScrollbar.css') }}" rel="stylesheet">
 @endsection
-<title>
+@section('title')
     تفاصيل فاتورة
-</title>
+@stop
 @section('page-header')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
@@ -202,7 +202,7 @@
                                         <div class="tab-pane" id="tab6">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">
-
+                                                @can('اضافة مرفق')
                                                     <div class="card-body">
                                                         <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                                                         <h5 class="card-title">اضافة مرفقات</h5>
@@ -223,7 +223,7 @@
                                                                 name="uploadedFile">تاكيد</button>
                                                         </form>
                                                     </div>
-
+                                                @endcan
                                                 <br>
 
                                                 <div class="table-responsive mt-15">
@@ -260,14 +260,14 @@
                                                                                 class="fas fa-download"></i>&nbsp;
                                                                             تحميل</a>
 
-
+                                                                        @can('حذف المرفق')
                                                                             <button class="btn btn-outline-danger btn-sm"
                                                                                 data-toggle="modal"
                                                                                 data-file_name="{{ $attachment->file_name }}"
                                                                                 data-invoice_number="{{ $attachment->invoice_number }}"
                                                                                 data-id_file="{{ $attachment->id }}"
                                                                                 data-target="#delete_file">حذف</button>
-
+                                                                        @endcan
 
                                                                     </td>
                                                                 </tr>
@@ -292,82 +292,84 @@
 
     </div>
     <!-- /row -->
+
+    <!-- delete -->
     <div class="modal fade" id="delete_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">حذف المرفق</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">حذف المرفق</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('delete_file') }}" method="post">
+
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <p class="text-center">
+                        <h6 style="color:red"> هل انت متاكد من عملية حذف المرفق ؟</h6>
+                        </p>
+
+                        <input type="hidden" name="id_file" id="id_file" value="">
+                        <input type="hidden" name="file_name" id="file_name" value="">
+                        <input type="hidden" name="invoice_number" id="invoice_number" value="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-danger">تاكيد</button>
+                    </div>
+                </form>
             </div>
-            <form action="{{ route('delete_file') }}" method="post">
-
-                {{ csrf_field() }}
-                <div class="modal-body">
-                    <p class="text-center">
-                    <h6 style="color:red"> هل انت متاكد من عملية حذف المرفق ؟</h6>
-                    </p>
-
-                    <input type="hidden" name="id_file" id="id_file" value="">
-                    <input type="hidden" name="file_name" id="file_name" value="">
-                    <input type="hidden" name="invoice_number" id="invoice_number" value="">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
-                    <button type="submit" class="btn btn-danger">تاكيد</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
-</div>
-<!-- Container closed -->
-</div>
-<!-- main-content closed -->
+    </div>
+    <!-- Container closed -->
+    </div>
+    <!-- main-content closed -->
 @endsection
 @section('js')
-<!--Internal  Datepicker js -->
-<script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
-<!-- Internal Select2 js-->
-<script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
-<!-- Internal Jquery.mCustomScrollbar js-->
-<script src="{{ URL::asset('assets/plugins/custom-scroll/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<!-- Internal Input tags js-->
-<script src="{{ URL::asset('assets/plugins/inputtags/inputtags.js') }}"></script>
-<!--- Tabs JS-->
-<script src="{{ URL::asset('assets/plugins/tabs/jquery.multipurpose_tabcontent.js') }}"></script>
-<script src="{{ URL::asset('assets/js/tabs.js') }}"></script>
-<!--Internal  Clipboard js-->
-<script src="{{ URL::asset('assets/plugins/clipboard/clipboard.min.js') }}"></script>
-<script src="{{ URL::asset('assets/plugins/clipboard/clipboard.js') }}"></script>
-<!-- Internal Prism js-->
-<script src="{{ URL::asset('assets/plugins/prism/prism.js') }}"></script>
+    <!--Internal  Datepicker js -->
+    <script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+    <!-- Internal Select2 js-->
+    <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <!-- Internal Jquery.mCustomScrollbar js-->
+    <script src="{{ URL::asset('assets/plugins/custom-scroll/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <!-- Internal Input tags js-->
+    <script src="{{ URL::asset('assets/plugins/inputtags/inputtags.js') }}"></script>
+    <!--- Tabs JS-->
+    <script src="{{ URL::asset('assets/plugins/tabs/jquery.multipurpose_tabcontent.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/tabs.js') }}"></script>
+    <!--Internal  Clipboard js-->
+    <script src="{{ URL::asset('assets/plugins/clipboard/clipboard.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/clipboard/clipboard.js') }}"></script>
+    <!-- Internal Prism js-->
+    <script src="{{ URL::asset('assets/plugins/prism/prism.js') }}"></script>
 
-<script>
-    $('#delete_file').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var id_file = button.data('id_file')
-        var file_name = button.data('file_name')
-        var invoice_number = button.data('invoice_number')
-        var modal = $(this)
+    <script>
+        $('#delete_file').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id_file = button.data('id_file')
+            var file_name = button.data('file_name')
+            var invoice_number = button.data('invoice_number')
+            var modal = $(this)
 
-        modal.find('.modal-body #id_file').val(id_file);
-        modal.find('.modal-body #file_name').val(file_name);
-        modal.find('.modal-body #invoice_number').val(invoice_number);
-    })
+            modal.find('.modal-body #id_file').val(id_file);
+            modal.find('.modal-body #file_name').val(file_name);
+            modal.find('.modal-body #invoice_number').val(invoice_number);
+        })
 
-</script>
+    </script>
 
-<script>
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
 
-</script>
+    </script>
 
 @endsection

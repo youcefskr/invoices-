@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('css')
 @endsection
-<title>
+@section('title')
     تغير حالة الدفع
-</title>
+@stop
 @section('page-header')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">

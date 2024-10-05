@@ -1,14 +1,14 @@
 @extends('layouts.master')
 @section('css')
-    <!--Internal  Font Awesome -->
-    <link href="{{ URL::asset('assets/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <!--Internal  treeview -->
-    <link href="{{ URL::asset('assets/plugins/treeview/treeview-rtl.css') }}" rel="stylesheet" type="text/css" />
+<!--Internal  Font Awesome -->
+<link href="{{URL::asset('assets/plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+<!--Internal  treeview -->
+<link href="{{URL::asset('assets/plugins/treeview/treeview-rtl.css')}}" rel="stylesheet" type="text/css" />
 
 
 
 @section('title')
-    عرض الصلاحيات - مورا سوفت للادارة القانونية
+عرض الصلاحيات - مورا سوفت للادارة القانونية
 @stop
 
 
@@ -42,10 +42,10 @@
                         <ul id="treeview1">
                             <li><a href="#">{{ $role->name }}</a>
                                 <ul>
-                                    @if (!empty($rolePermissions))
-                                        @foreach ($rolePermissions as $v)
-                                            <li>{{ $v->name }}</li>
-                                        @endforeach
+                                    @if(!empty($rolePermissions))
+                                    @foreach($rolePermissions as $v)
+                                    <li>{{ $v->name }}</li>
+                                    @endforeach
                                     @endif
                                 </ul>
                             </li>
@@ -64,6 +64,6 @@
 <!-- main-content closed -->
 @endsection
 @section('js')
-<script src="{{ URL::asset('assets/plugins/treeview/treeview.js') }}"></script>
+<script src="{{URL::asset('assets/plugins/treeview/treeview.js')}}"></script>
 
 @endsection

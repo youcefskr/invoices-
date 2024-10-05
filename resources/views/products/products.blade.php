@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('css')
     <!-- Internal Data table css -->
@@ -16,9 +15,9 @@
     <!--- Select2 css -->
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 @endsection
-<title>
+@section('title')
     المنتجات
-</title>
+@stop
 
 @section('page-header')
     <!-- breadcrumb -->
@@ -79,10 +78,10 @@
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-
+                        @can('اضافة منتج')
                             <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 data-toggle="modal" href="#exampleModal">اضافة منتج</a>
-
+                        @endcan
                     </div>
                 </div>
                 <div class="card-body">
@@ -108,17 +107,19 @@
                                         <td>{{ $Product->section->section_name }}</td>
                                         <td>{{ $Product->description }}</td>
                                         <td>
-
+                                            @can('تعديل منتج')
                                                 <button class="btn btn-outline-success btn-sm"
                                                     data-name="{{ $Product->Product_name }}" data-pro_id="{{ $Product->id }}"
                                                     data-section_name="{{ $Product->section->section_name }}"
                                                     data-description="{{ $Product->description }}" data-toggle="modal"
                                                     data-target="#edit_Product">تعديل</button>
+                                            @endcan
 
+                                            @can('حذف منتج')
                                                 <button class="btn btn-outline-danger btn-sm " data-pro_id="{{ $Product->id }}"
                                                     data-product_name="{{ $Product->Product_name }}" data-toggle="modal"
                                                     data-target="#modaldemo9">حذف</button>
-
+                                            @endcan
 
                                         </td>
                                     </tr>
@@ -197,12 +198,9 @@
                             </div>
 
                             <label class="my-1 mr-2" for="inlineFormCustomSelectPref">القسم</label>
-                            <select name="section_id" id="section_id" class="custom-select my-1 mr-sm-2" required>
+                            <select name="section_name" id="section_name" class="custom-select my-1 mr-sm-2" required>
                                 @foreach ($sections as $section)
-
-                                    <option value="{{ $section->id }}">{{ $section->section_name }}</option>
-
-
+                                    <option>{{ $section->section_name }}</option>
                                 @endforeach
                             </select>
 
@@ -292,12 +290,12 @@
         $('#edit_Product').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var Product_name = button.data('name')
-            var section_id = button.data('section_id')
+            var section_name = button.data('section_name')
             var pro_id = button.data('pro_id')
             var description = button.data('description')
             var modal = $(this)
             modal.find('.modal-body #Product_name').val(Product_name);
-            modal.find('.modal-body #section_id').val(section_id);
+            modal.find('.modal-body #section_name').val(section_name);
             modal.find('.modal-body #description').val(description);
             modal.find('.modal-body #pro_id').val(pro_id);
         })

@@ -16,75 +16,72 @@ class UserRolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Permissions
-        Permission::create(['name' => 'view role']);
-        Permission::create(['name' => 'create role']);
-        Permission::create(['name' => 'update role']);
-        Permission::create(['name' => 'delete role']);
+        $permissions = [
 
-        Permission::create(['name' => 'view permission']);
-        Permission::create(['name' => 'create permission']);
-        Permission::create(['name' => 'update permission']);
-        Permission::create(['name' => 'delete permission']);
+            'الفواتير',
+            'قائمة الفواتير',
+            'الفواتير المدفوعة',
+            'الفواتير المدفوعة جزئيا',
+            'الفواتير الغير مدفوعة',
+            'ارشيف الفواتير',
+            'التقارير',
+            'تقرير الفواتير',
+            'تقرير العملاء',
+            'المستخدمين',
+            'قائمة المستخدمين',
+            'صلاحيات المستخدمين',
+            'الاعدادات',
+            'المنتجات',
+            'الاقسام',
 
-        Permission::create(['name' => 'view user']);
-        Permission::create(['name' => 'create user']);
-        Permission::create(['name' => 'update user']);
-        Permission::create(['name' => 'delete user']);
+
+            'اضافة فاتورة',
+            'حذف الفاتورة',
+            'تصدير EXCEL',
+            'تغير حالة الدفع',
+            'تعديل الفاتورة',
+            'ارشفة الفاتورة',
+            'طباعةالفاتورة',
+            'اضافة مرفق',
+            'حذف المرفق',
+
+            'اضافة مستخدم',
+            'تعديل مستخدم',
+            'حذف مستخدم',
+
+            'عرض صلاحية',
+            'اضافة صلاحية',
+            'تعديل صلاحية',
+            'حذف صلاحية',
+
+            'اضافة منتج',
+            'تعديل منتج',
+            'حذف منتج',
+
+            'اضافة قسم',
+            'تعديل قسم',
+            'حذف قسم',
+            'الاشعارات',
+
+        ];
+
+        foreach ($permissions as $permission) {
+
+            Permission::create(['name' => $permission]);
+        }
 
 
 
 
-        // Create Roles
-        $superAdminRole = Role::create(['name' => 'super-admin']); //as super-admin
-        $adminRole = Role::create(['name' => 'admin']);
-        $staffRole = Role::create(['name' => 'staff']);
-        $userRole = Role::create(['name' => 'user']);
 
-        // Lets give all permission to super-admin role.
-        $allPermissionNames = Permission::pluck('name')->toArray();
 
-        $superAdminRole->givePermissionTo($allPermissionNames);
 
-        // Let's give few permissions to admin role.
-        $adminRole->givePermissionTo(['create role', 'view role', 'update role']);
-        $adminRole->givePermissionTo(['create permission', 'view permission']);
-        $adminRole->givePermissionTo(['create user', 'view user', 'update user']);
+
 
 
 
         // Let's Create User and assign Role to it.
 
-        $superAdminUser = User::firstOrCreate([
-            'email' => 'superadmin@gmail.com',
-        ], [
-            'name' => 'Super Admin',
-            'email' => 'superadmin@gmail.com',
-            'password' => Hash::make('12345678'),
-        ]);
 
-        $superAdminUser->assignRole($superAdminRole);
-
-
-        $adminUser = User::firstOrCreate([
-            'email' => 'admin@gmail.com'
-        ], [
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('12345678'),
-        ]);
-
-        $adminUser->assignRole($adminRole);
-
-
-        $staffUser = User::firstOrCreate([
-            'email' => 'staff@gmail.com',
-        ], [
-            'name' => 'Staff',
-            'email' => 'staff@gmail.com',
-            'password' => Hash::make('12345678'),
-        ]);
-
-        $staffUser->assignRole($staffRole);
     }
 }

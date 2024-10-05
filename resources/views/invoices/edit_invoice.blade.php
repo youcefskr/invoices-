@@ -11,9 +11,9 @@
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
 @endsection
-<title>
+@section('title')
     تعديل فاتورة
-</title>
+@stop
 
 @section('page-header')
     <!-- breadcrumb -->
